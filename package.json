@@ -1,18 +1,24 @@
 {
-  "name": "Schemas",
-  "version": "1.0.0",
+  "name": "mtschemas",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch",
+    "publish": "npm publish"
   },
   "keywords": [],
-  "author": "",
+  "author": "DynamisDevelopment",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "jest": "^27.0.6",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
     "validator": "^13.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DynamisDevelopment/MTSchemas"
   }
 }
