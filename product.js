@@ -1,58 +1,83 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 
-const userSchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'How will they find it, dummy?'],
       trim: true,
-      //todo Add Validation
-      //   validate(val) {
-      //     if (val < 18) throw new Error('Must be an adult')
-      //   },
+      index: true,
     },
-    age: {
+    price: {
       type: Number,
       default: 0.0,
+      required: true,
+      validate(val) {
+        if (val === 0)
+          throw new Error("We're not running a charity here, bucko!")
+      },
+    },
+    sale: {
+      price: {
+        type: Number,
+      },
+      endTimestamp: {
+        type: Date,
+      },
     },
     summary: {
       type: String,
-      required: true,
+      required: [
+        true,
+        'Please add something somehting short but descriptive, more details in the description.',
+      ],
       trim: true,
-      //todo check if min 25 words
-      // validate(val) {
-
-      // }
+      validate: [
+        {
+          validator: val => {
+            if (val.split(' ').length < 25) throw new Error()
+          },
+          message: () => `Summary must be at least 25 words long`,
+        },
+      ],
     },
-    modifierOne: {
-      type: [String],
-      //todo check if valid option
-      // validate(val) {
+    modifier: [
+      {
+        name: {
+          type: String,
+          required: true,
 
-      // }
-    },
-    modifierTwo: {
-      type: [String],
-      //todo check if valid option
-      // validate(val) {
+          //todo check if valid option
+          // validate(val) {
 
-      // }
-    },
-    color: {
-      type: [String],
-      //todo check if valid color
-      // validate(val) {
-
-      // }
-    },
+          // }
+        },
+        inventory: {
+          type: Number,
+          default: 0.0,
+          required: true,
+        },
+      },
+    ],
+    colors: [
+      {
+        type: [String],
+        validate: {
+          validator: val => {
+            const hex = /[0-9A-Fa-f]{6}/g
+            const res = hex.test(val)
+            if (!res) throw new Error()
+          },
+          message: () => `Please input a valid Hex value`,
+        },
+      },
+    ],
     // todo add Categories schema
     // Categories: [Categories]
     pictures: {
       type: [Buffer],
       //todo check if valid buffer data
+      //todo check if at least 1 image
       // validate(val) {
 
       // }
@@ -84,46 +109,46 @@ const userSchema = new mongoose.Schema(
   }
 )
 
-userSchema.methods.toJSON = function () {
-  const user = this
+// productSchema.methods.toJSON = function () {
+//   const product = this
 
-  const userObj = user.toObject()
-  delete userObj.password
-  delete userObj.tokens
-  delete userObj.avatar
+//   const productObj = product.toObject()
+//   delete productObj.password
+//   delete productObj.tokens
+//   delete productObj.avatar
 
-  return userObj
-}
+//   return productObj
+// }
 
-userSchema.methods.generateAuthToken = async function () {
-  const user = this
-  const token = jwt.sign({ _id: user._id.toString() }, 'ThisIsMySecret324@!')
+// productSchema.methods.generateAuthToken = async function () {
+//   const product = this
+//   const token = jwt.sign({ _id: product._id.toString() }, 'ThisIsMySecret324@!')
 
-  user.tokens = user.tokens.concat({ token })
-  await user.save()
+//   product.tokens = product.tokens.concat({ token })
+//   await product.save()
 
-  return token
-}
+//   return token
+// }
 
-userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email })
-  if (!user) throw new Error('No User Found')
+// productSchema.statics.findByCredentials = async (email, password) => {
+//   const product = await product.findOne({ email })
+//   if (!product) throw new Error('No product Found')
 
-  const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) throw new Error('Password not valid')
+//   const isMatch = await bcrypt.compare(password, product.password)
+//   if (!isMatch) throw new Error('Password not valid')
 
-  return user
-}
+//   return product
+// }
 
-userSchema.pre('save', async function (next) {
-  const user = this
+// productSchema.pre('save', async function (next) {
+//   const product = this
 
-  if (user.isModified('password'))
-    user.password = await bcrypt.hash(user.password, 8)
+//   if (product.isModified('password'))
+//     product.password = await bcrypt.hash(product.password, 8)
 
-  next()
-})
+//   next()
+// })
 
-const User = mongoose.model('User', userSchema)
+const Product = mongoose.model('Product', productSchema)
 
-module.exports = User
+module.exports = Product
