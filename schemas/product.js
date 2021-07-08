@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -96,12 +96,22 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    reviews: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Review',
+    },
   },
   {
     timestamps: true,
   }
 )
 
-const Product = mongoose.model('Product', productSchema)
+// ProductSchema.virtual('review', {
+//   ref: 'Review',
+//   localField: '_id',
+//   foreignField: 'owner',
+// })
+
+const Product = mongoose.model('Product', ProductSchema)
 
 module.exports = Product

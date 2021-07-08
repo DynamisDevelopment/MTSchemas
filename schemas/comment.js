@@ -22,14 +22,6 @@ const CommentSchema = new mongoose.Schema(
         message: () => "Give it up bro, she's not gonna send you feet pics.",
       },
     },
-    helpful: {
-      type: Number,
-      default: 0,
-    },
-    unhelpful: {
-      type: Number,
-      default: 0,
-    },
   },
   {
     timestamps: true,

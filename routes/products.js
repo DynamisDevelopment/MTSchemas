@@ -4,11 +4,22 @@ const Product = require('../schemas/product')
 const router = new express.Router()
 
 router.get('/product', async (req, res) => {
-  try {
-    const products = await Product.find()
+  const products = await Product.find()
 
+  try {
     res.send(products)
   } catch (err) {
+    res.status(404).send()
+  }
+})
+
+router.get('/product/:id', async (req, res) => {
+  let product = await Product.findById(req.params.id).populate('reviews')
+
+  try {
+    res.send(product)
+  } catch (err) {
+    console.log(err)
     res.status(404).send()
   }
 })

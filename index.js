@@ -7,6 +7,7 @@ const post = require('./schemas/post')
 
 // * Routes
 const productRouter = require('./routes/products')
+const reviewRouter = require('./routes/reviews')
 
 // * Connect to DB
 const prod =
@@ -24,6 +25,7 @@ const app = express()
 
 app.use(express.json())
 app.use(productRouter)
+app.use(reviewRouter)
 
 const port = process.env.PORT || 3000
 

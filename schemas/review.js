@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const reviewSchema = new mongoose.Schema(
+const ReviewSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -32,12 +32,24 @@ const reviewSchema = new mongoose.Schema(
         message: () => 'Invalid score',
       },
     },
+    helpful: {
+      type: Number,
+      default: 0,
+    },
+    unhelpful: {
+      type: Number,
+      default: 0,
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Needs a Product'],
+    },
   },
   {
     timestamps: true,
   }
 )
 
-const Review = mongoose.model('Review', reviewSchema)
+const Review = mongoose.model('Review', ReviewSchema)
 
 module.exports = Review
