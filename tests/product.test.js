@@ -1,6 +1,6 @@
 const Product = require('../product')
 
-const dProduct = {
+const productOne = {
   name: 'Chair',
   price: 17.99,
   sale: {
@@ -37,6 +37,6 @@ const dProduct = {
 }
 
 test('Creates Valid Model', () => {
-  const product = new Product(dProduct).validateSync()
+  const product = new Product(productOne).validateSync()
   expect(product).toBe(undefined)
 })
