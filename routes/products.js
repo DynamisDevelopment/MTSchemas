@@ -1,74 +1,50 @@
 const express = require('express')
 const Product = require('../schemas/product')
+const { complete, forbiddenUpdates } = require('../utils')
 
 const router = new express.Router()
 
 router.get('/product', async (req, res) => {
   const products = await Product.find()
 
-  try {
-    res.send(products)
-  } catch (err) {
-    res.status(404).send()
-  }
+  complete(() => res.send(products), res)
 })
 
 router.get('/product/:id', async (req, res) => {
   let product = await Product.findById(req.params.id).populate('reviews')
 
-  try {
-    res.send(product)
-  } catch (err) {
-    console.log(err)
-    res.status(404).send()
-  }
+  complete(() => res.send(product), res)
 })
 
 router.post('/product', async (req, res) => {
   const product = await Product(req.body)
 
-  try {
+  complete(async () => {
     await product.save()
     res.send(product)
-  } catch (err) {
-    res.status(400)
-    res.send(err)
-  }
+  }, res)
 })
 
 router.delete('/product/:id', async (req, res) => {
   const product = await Product.findByIdAndDelete(req.params.id)
   if (!product) res.status(404).send('No Products Found')
 
-  try {
-    res.send(product)
-  } catch (err) {
-    res.status(400)
-    res.send(err)
-  }
+  complete(() => res.send(product), res)
 })
 
 router.patch('/product/:id', async (req, res) => {
   const updates = Object.keys(req.body)
-  const forbiddenUpdates = ['createdAt', 'updatedAt', '_id']
-  const isValidOperation = updates.every(
-    update => !forbiddenUpdates.includes(update)
-  )
-  if (!isValidOperation)
-    return res.status(400).send({ error: 'Invalid updates!' })
+  forbiddenUpdates(req.body, res, ['createdAt', 'updatedAt', '_id'])
 
   const product = await Product.findById(req.params.id)
   if (!product) res.status(404).send('No Products Found')
 
-  try {
+  complete(async () => {
     updates.forEach(update => (product[update] = req.body[update]))
 
     await product.save()
     res.send(product)
-  } catch (err) {
-    res.status(400)
-    res.send(err)
-  }
+  }, res)
 })
 
 module.exports = router
