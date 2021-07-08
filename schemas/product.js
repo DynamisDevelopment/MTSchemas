@@ -47,12 +47,8 @@ const productSchema = new mongoose.Schema(
       {
         name: {
           type: String,
+          enum: ['sm', 'md', 'lg', 'xl'],
           required: true,
-
-          //todo check if valid option
-          // validate(val) {
-
-          // }
         },
         inventory: {
           type: Number,
@@ -74,15 +70,10 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    // todo add Categories schema
-    // Categories: [Categories]
+    Categories: [String],
     pictures: {
       type: [Buffer],
-      //todo check if valid buffer data
-      //todo check if at least 1 image
-      // validate(val) {
-
-      // }
+      // required: true,
     },
     social: {
       facebook: String,

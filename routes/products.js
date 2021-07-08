@@ -14,7 +14,7 @@ router.get('/product', async (req, res) => {
 })
 
 router.post('/product', async (req, res) => {
-  const product = new Product(req.body)
+  const product = await Product(req.body)
 
   try {
     await product.save()
@@ -26,10 +26,10 @@ router.post('/product', async (req, res) => {
 })
 
 router.delete('/product/:id', async (req, res) => {
-  const product = new Product.findById(req.body)
+  const product = await Product.findByIdAndDelete(req.params.id)
+  if (!product) res.status(404).send('No Products Found')
 
   try {
-    await product.save()
     res.send(product)
   } catch (err) {
     res.status(400)
@@ -46,7 +46,8 @@ router.patch('/product/:id', async (req, res) => {
   if (!isValidOperation)
     return res.status(400).send({ error: 'Invalid updates!' })
 
-  const product = new Product.findById(req.body)
+  const product = await Product.findById(req.params.id)
+  if (!product) res.status(404).send('No Products Found')
 
   try {
     updates.forEach(update => (product[update] = req.body[update]))
