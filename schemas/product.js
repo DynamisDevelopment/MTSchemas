@@ -12,9 +12,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0.0,
       required: true,
-      validate(val) {
-        if (val === 0)
-          throw new Error("We're not running a charity here, bucko!")
+      validate: {
+        validator: val => {
+          if (val === 0) throw new Error()
+        },
+        message: () => "We're not running a charity here, bucko!",
       },
     },
     sale: {
@@ -108,46 +110,6 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 )
-
-// productSchema.methods.toJSON = function () {
-//   const product = this
-
-//   const productObj = product.toObject()
-//   delete productObj.password
-//   delete productObj.tokens
-//   delete productObj.avatar
-
-//   return productObj
-// }
-
-// productSchema.methods.generateAuthToken = async function () {
-//   const product = this
-//   const token = jwt.sign({ _id: product._id.toString() }, 'ThisIsMySecret324@!')
-
-//   product.tokens = product.tokens.concat({ token })
-//   await product.save()
-
-//   return token
-// }
-
-// productSchema.statics.findByCredentials = async (email, password) => {
-//   const product = await product.findOne({ email })
-//   if (!product) throw new Error('No product Found')
-
-//   const isMatch = await bcrypt.compare(password, product.password)
-//   if (!isMatch) throw new Error('Password not valid')
-
-//   return product
-// }
-
-// productSchema.pre('save', async function (next) {
-//   const product = this
-
-//   if (product.isModified('password'))
-//     product.password = await bcrypt.hash(product.password, 8)
-
-//   next()
-// })
 
 const Product = mongoose.model('Product', productSchema)
 
