@@ -1,12 +1,12 @@
 {
   "name": "mt-routes-schemas",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest --watch",
     "publish": "npm publish",
-    "start": "env-cmd -e dev nodemon index"
+    "start": "env-cmd -e dev nodemon ./src/index"
   },
   "jest": {
     "testEnvironment": "node"

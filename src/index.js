@@ -26,7 +26,7 @@ if (process.env.STAGE === 'test') {
     useFindAndModify: false,
   })
 
-  const port = process.env.PORT || 4000
+  const port = process.env.PORT || 4001
 
   app.listen(port, () => console.log(`running on port: ${port}`))
 }
