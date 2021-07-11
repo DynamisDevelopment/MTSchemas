@@ -1,4 +1,7 @@
-const Product = require('../product')
+const request = require('supertest')
+const mongoose = require('mongoose')
+const app = require('../app')
+const Product = require('../schemas/product')
 
 const productOne = {
   name: 'Chair',
@@ -36,7 +39,25 @@ const productOne = {
     'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi eaque vero',
 }
 
-test('Creates Valid Model', () => {
-  const product = new Product(productOne).validateSync()
-  expect(product).toBe(undefined)
+// beforeEach(async () => {
+//   await Product.deleteMany()
+//   await new Product(productOne).save
+// })
+
+describe('Products', () => {
+  test('', () => {
+    expect(true).toBe(true)
+  })
+
+  test('Add a new product', async () => {
+    const productTwo = {
+      ...productOne,
+      name: 'Stool',
+    }
+    const res = await request(app).post('/product').send(productTwo).expect(200)
+    const product = await User.findById(res.body.product._id)
+
+    expect(product).not.toBeNull()
+    expect(res.body.name).toEqual('Stool')
+  })
 })

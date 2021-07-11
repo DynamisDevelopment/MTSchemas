@@ -1,13 +1,9 @@
-const express = require('express')
 const mongoose = require('mongoose')
+const app = require('./app')
 
 // * Schemas
 const product = require('./schemas/product')
 const post = require('./schemas/post')
-
-// * Routes
-const productRouter = require('./routes/products')
-const reviewRouter = require('./routes/reviews')
 
 // * Connect to DB
 const prod =
@@ -18,16 +14,10 @@ mongoose.connect(test, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 })
 
-// * Setup For Local Testing
-const app = express()
-
-app.use(express.json())
-app.use(productRouter)
-app.use(reviewRouter)
-
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4000
 
 app.listen(port, () => console.log(`running on port: ${port}`))
 

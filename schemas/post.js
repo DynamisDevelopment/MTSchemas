@@ -18,10 +18,10 @@ const postSchema = new mongoose.Schema(
         message: () => 'Keep it brief!',
       },
     },
-    thumbnails: {
-      type: [Buffer],
-      required: true,
-    },
+    // thumbnails: {
+    //   type: [Buffer],
+    //   required: true,
+    // },
     categories: {
       type: String,
     },
@@ -39,7 +39,7 @@ const postSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: val => {
-          if (val.split(' ').length < 150) throw new Error()
+          if (val.split(' ').length >= 150) throw new Error()
         },
         message: () => 'This is an afterthought not another article!',
       },
