@@ -5,10 +5,10 @@ const { complete, forbiddenUpdates } = require('../utils')
 
 const router = new express.Router()
 
-router.get('/reviews', async (req, res) => {
-  const reviews = await Review.find().populate({
-    path: 'owner',
-    model: 'Product',
+router.get('/product/:id/reviews', async (req, res) => {
+  const reviews = await Product.findById(req.params.id).populate({
+    path: 'reviews',
+    model: 'Review',
   })
 
   complete(() => res.send(reviews), res)
@@ -30,7 +30,7 @@ router.post('/product/:id/review', async (req, res) => {
 })
 
 router.delete('/review/:id', async (req, res) => {
-  const review = await review.findByIdAndDelete(req.params.id)
+  const review = await Review.findByIdAndDelete(req.params.id)
   if (!review) res.status(404).send('No reviews Found')
 
   complete(() => res.send(review), res)
@@ -40,7 +40,7 @@ router.patch('/review/:id', async (req, res) => {
   const updates = Object.keys(req.body)
   forbiddenUpdates(req.body, res, ['createdAt', 'updatedAt', '_id'])
 
-  const review = await review.findById(req.params.id)
+  const review = await Review.findById(req.params.id)
   if (!review) res.status(404).send('No reviews Found')
 
   complete(async () => {
