@@ -6,12 +6,12 @@ const { complete, forbiddenUpdates } = require('../utils')
 const router = new express.Router()
 
 router.get('/product/:id/reviews', async (req, res) => {
-  const reviews = await Product.findById(req.params.id).populate({
+  const product = await Product.findById(req.params.id).populate({
     path: 'reviews',
     model: 'Review',
   })
 
-  complete(() => res.send(reviews), res)
+  complete(() => res.send(product.review), res)
 })
 
 router.post('/product/:id/review', async (req, res) => {

@@ -62,7 +62,10 @@ const postSchema = new mongoose.Schema(
         default: false,
       },
     },
-    //TODO Add Comments that connect to users
+    comments: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Comment',
+    },
   },
   {
     timestamps: true,
