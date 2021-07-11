@@ -1,12 +1,12 @@
 {
-  "name": "mtcommon",
-  "version": "1.0.0",
+  "name": "mt-routes-schemas",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
     "publish": "npm publish",
-    "start": "nodemon index"
+    "start": "env-cmd -e dev nodemon index"
   },
   "jest": {
     "testEnvironment": "node"
@@ -23,6 +23,7 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
+    "env-cmd": "10.1.0",
     "nodemon": "^2.0.9",
     "supertest": "^6.1.3"
   },
