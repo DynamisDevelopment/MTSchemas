@@ -1,4 +1,11 @@
-const mongoose = require('mongoose')
+try {
+  var mongoose = require('mongoose')
+} catch (_) {
+  // workaround when `npm link`'ed for development
+  var prequire = require('parent-require'),
+    mongoose = prequire('mongoose')
+}
+
 const app = require('./app')
 
 // * Schemas
@@ -40,4 +47,5 @@ module.exports = {
   reviewRouter,
   postRouter,
   commentRouter,
+  mongoose,
 }
