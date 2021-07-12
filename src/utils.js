@@ -30,9 +30,17 @@ const forbiddenUpdates = (body, res, forbiddenUpdates) => {
     return res.status(400).send({ error: 'Invalid updates!' })
 }
 
+const wordLength = (val, number, greaterThan) => {
+  if (greaterThan)
+    return val.split(' ').length > number && val.split('&nbsp;').length > number
+  else
+    return val.split(' ').length < number && val.split('&nbsp;').length < number
+}
+
 module.exports = {
   sendErr,
   complete,
   allowedUpdates,
   forbiddenUpdates,
+  wordLength,
 }

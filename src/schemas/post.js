@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { wordLength } = require('../utils')
 
 const postSchema = new mongoose.Schema(
   {
@@ -13,7 +14,7 @@ const postSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: val => {
-          if (val.split(' ').length > 20) throw new Error()
+          if (wordLength(val, 20, true)) throw new Error()
         },
         message: () => 'Keep it brief!',
       },
@@ -30,7 +31,7 @@ const postSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: val => {
-          if (val.split(' ').length < 25) throw new Error()
+          if (wordLength(val, 25)) throw new Error()
         },
         message: () => "Really, that's you're article? Try better.",
       },
@@ -39,7 +40,7 @@ const postSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: val => {
-          if (val.split(' ').length >= 150) throw new Error()
+          if (wordLength(val, 150, true)) throw new Error()
         },
         message: () => 'This is an afterthought not another article!',
       },

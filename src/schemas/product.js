@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { wordLength } = require('../utils')
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -37,9 +38,9 @@ const ProductSchema = new mongoose.Schema(
       validate: [
         {
           validator: val => {
-            if (val.split(' ').length < 25) throw new Error()
+            if (wordLength(val, 20)) throw new Error()
           },
-          message: () => `Summary must be at least 25 words long`,
+          message: () => `Summary must be at least 20 words long`,
         },
       ],
     },
@@ -70,7 +71,7 @@ const ProductSchema = new mongoose.Schema(
         },
       },
     ],
-    Categories: [String],
+    categories: [String],
     pictures: {
       type: [Buffer],
       // required: true,

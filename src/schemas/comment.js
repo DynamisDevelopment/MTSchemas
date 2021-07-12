@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { wordLength } = require('../utils')
 
 const CommentSchema = new mongoose.Schema(
   {
@@ -7,7 +8,7 @@ const CommentSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: val => {
-          if (val.split(' ').lenght >= 20) throw new Error()
+          if (wordLength(val, 20, true)) throw new Error()
         },
         message: () => 'Bit long there bucko!',
       },
@@ -17,7 +18,7 @@ const CommentSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: val => {
-          if (val.split(' ').lenght >= 500) throw new Error('')
+          if (wordLength(val, 500, true)) throw new Error('')
         },
         message: () => "Give it up bro, she's not gonna send you feet pics.",
       },

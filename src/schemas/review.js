@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { wordLength } = require('../utils')
 
 const ReviewSchema = new mongoose.Schema(
   {
@@ -7,7 +8,7 @@ const ReviewSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: val => {
-          if (val.split(' ').lenght >= 20) throw new Error()
+          if (wordLength(val, 20, true)) throw new Error()
         },
         message: () => 'Bit long there bucko!',
       },
@@ -17,7 +18,7 @@ const ReviewSchema = new mongoose.Schema(
       required: true,
       validate: {
         validator: val => {
-          if (val.split(' ').lenght >= 1000) throw new Error('')
+          if (wordLength(val, 1000, true)) throw new Error('')
         },
         message: () => "We don't need your autobiography, Karen...",
       },
