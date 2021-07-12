@@ -1,11 +1,3 @@
-try {
-  var mongoose = require('mongoose')
-} catch (_) {
-  // workaround when `npm link`'ed for development
-  var prequire = require('parent-require'),
-    mongoose = prequire('mongoose')
-}
-
 const app = require('./app')
 
 // * Schemas
@@ -21,18 +13,7 @@ const postRouter = require('./routes/posts')
 const commentRouter = require('./routes/comments')
 
 // * Connect to DB
-if (process.env.STAGE === 'test') {
-  const prod =
-    'mongodb+srv://Cicero:Bigfoot3248@cluster0.hzjza.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-  const test = 'mongodb://127.0.0.1:27017/mollaTinker'
-
-  mongoose.connect(test, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-
+if (process.env.STAGE === 'test' || 'dev') {
   const port = process.env.PORT || 4001
 
   app.listen(port, () => console.log(`running on port: ${port}`))
