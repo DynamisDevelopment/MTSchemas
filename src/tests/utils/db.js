@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
+const request = require('supertest')
+const app = require('../../app')
 const Product = require('../../schemas/product')
+const Review = require('../../schemas/review')
 
 const productId = new mongoose.Types.ObjectId()
 const productOne = {
@@ -44,14 +47,34 @@ const productTwo = {
   _id: new mongoose.Types.ObjectId(),
 }
 
+const reviewId = new mongoose.Types.ObjectId()
+const reviewOne = {
+  _id: reviewId,
+  title: 'This is the coolest product ever!',
+  body: '--------------------',
+  score: 5,
+}
+
+const reviewTwo = {
+  _id: new mongoose.Types.ObjectId(),
+  title: 'This product sucks and made my wife leave me!',
+  body: '--------------------',
+  score: 2,
+}
+
 const setupDatabase = async () => {
   await Product.deleteMany({})
+  await Review.deleteMany({})
   await new Product(productOne).save()
+  await request(app).post(`/product/${productId}/review`).send(reviewOne)
 }
 
 module.exports = {
   productOne,
   productId,
   productTwo,
+  reviewOne,
+  reviewId,
+  reviewTwo,
   setupDatabase,
 }

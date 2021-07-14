@@ -1,12 +1,7 @@
 const request = require('supertest')
 const app = require('../app')
 const Product = require('../schemas/product')
-const {
-  productOne,
-  productId,
-  productTwo,
-  setupDatabase,
-} = require('./utils/db')
+const { productId, reviewId, productTwo, setupDatabase } = require('./utils/db')
 
 beforeEach(setupDatabase)
 
@@ -24,6 +19,13 @@ describe('Products', () => {
     const res = await Product.find()
 
     expect(res.length).toEqual(1)
+  })
+
+  test('Gets specific product and populates reviews', async () => {
+    const res = await Product.find()
+
+    expect(res.length).toEqual(1)
+    expect(res[0].reviews[0]._id).toEqual(reviewId)
   })
 
   test('Delete Product', async () => {
