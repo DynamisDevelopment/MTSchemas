@@ -21,7 +21,10 @@ router.get('/post', async (req, res) => {
 })
 
 router.get('/post/:id', async (req, res) => {
-  let post = await Post.findById(req.params.id).populate('reviews')
+  let post = await Post.findById(req.params.id).populate({
+    path: 'comments',
+    model: 'Comment',
+  })
 
   complete(() => res.send(post), res)
 })

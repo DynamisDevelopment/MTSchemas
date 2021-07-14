@@ -11,7 +11,10 @@ router.get('/product', async (req, res) => {
 })
 
 router.get('/product/:id', async (req, res) => {
-  let product = await Product.findById(req.params.id).populate('reviews')
+  let product = await Product.findById(req.params.id).populate({
+    path: 'reviews',
+    model: 'Review',
+  })
 
   complete(() => res.send(product), res)
 })

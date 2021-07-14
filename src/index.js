@@ -28,5 +28,5 @@ module.exports = {
   reviewRouter,
   postRouter,
   commentRouter,
-  mongoose,
+  // mongoose,
 }

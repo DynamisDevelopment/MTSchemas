@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Review = require('./review')
 const { wordLength } = require('../utils')
 
 const ProductSchema = new mongoose.Schema(
@@ -107,11 +108,11 @@ const ProductSchema = new mongoose.Schema(
   }
 )
 
-// ProductSchema.virtual('review', {
-//   ref: 'Review',
-//   localField: '_id',
-//   foreignField: 'owner',
-// })
+ProductSchema.pre('findOneAndDelete', async function (next) {
+  const product = this.getQuery()
+  await Review.deleteMany({ owner: product._id })
+  next()
+})
 
 const Product = mongoose.model('Product', ProductSchema)
 

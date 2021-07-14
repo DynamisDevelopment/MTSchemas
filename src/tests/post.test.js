@@ -1,7 +1,8 @@
 const request = require('supertest')
 const app = require('../app')
 const Post = require('../schemas/post')
-const { postId, postTwo, commentId, setupDatabase } = require('./utils/db')
+const Comment = require('../schemas/comment')
+const { postId, postTwo, setupDatabase } = require('./utils/db')
 
 beforeEach(setupDatabase)
 
@@ -21,10 +22,10 @@ describe('posts', () => {
   })
 
   test('Gets specific post and populates comments', async () => {
-    const res = await Post.find()
+    const res = await request(app).get(`/post/${postId}`).expect(200)
 
-    expect(res.length).toEqual(1)
-    expect(res[0].comments[0]._id).toEqual(commentId)
+    const title = res.body.comments[0].title
+    expect(title).toEqual('This post sucks')
   })
 
   test('Deletes post', async () => {
@@ -32,6 +33,13 @@ describe('posts', () => {
 
     const post = await Post.findById(postId)
     expect(post).toBeNull()
+  })
+
+  test('Delete Post and related Comments', async () => {
+    await request(app).delete(`/post/${postId}`).expect(200)
+
+    const comments = await Comment.find({ owner: postId })
+    expect(comments.length).toEqual(0)
   })
 
   test('Updates post', async () => {

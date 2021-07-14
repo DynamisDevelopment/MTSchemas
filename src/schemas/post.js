@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
+const Comment = require('./comment')
 const { wordLength } = require('../utils')
 
-const postSchema = new mongoose.Schema(
+const PostSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -73,6 +74,12 @@ const postSchema = new mongoose.Schema(
   }
 )
 
-const Post = mongoose.model('Post', postSchema)
+PostSchema.pre('findOneAndDelete', async function (next) {
+  const post = this.getQuery()
+  await Comment.deleteMany({ owner: post._id })
+  next()
+})
+
+const Post = mongoose.model('Post', PostSchema)
 
 module.exports = Post
