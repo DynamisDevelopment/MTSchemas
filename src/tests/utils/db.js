@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const Product = require('../../schemas/product')
 
+const productId = new mongoose.Types.ObjectId()
 const productOne = {
+  _id: productId,
   name: 'Chair',
   price: 17.99,
   sale: {
@@ -37,12 +39,19 @@ const productOne = {
     'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi eaque vero',
 }
 
+const productTwo = {
+  ...productOne,
+  _id: new mongoose.Types.ObjectId(),
+}
+
 const setupDatabase = async () => {
-  await Product.deleteMany()
+  await Product.deleteMany({})
   await new Product(productOne).save()
 }
 
 module.exports = {
   productOne,
+  productId,
+  productTwo,
   setupDatabase,
 }
