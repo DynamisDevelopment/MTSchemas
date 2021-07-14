@@ -36,7 +36,6 @@ describe('Products', () => {
   })
 
   test('Updates Product', async () => {
-    const product = await Product.find()
     const res = await request(app)
       .patch(`/product/${productId}`)
       .send({

@@ -40,7 +40,7 @@ router.patch('/comment/:id', async (req, res) => {
   const updates = Object.keys(req.body)
   forbiddenUpdates(req.body, res, ['createdAt', 'updatedAt', '_id'])
 
-  const comment = await comment.findById(req.params.id)
+  const comment = await Comment.findById(req.params.id)
   if (!comment) res.status(404).send('No comments Found')
 
   complete(async () => {

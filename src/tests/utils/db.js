@@ -4,6 +4,7 @@ const app = require('../../app')
 const Product = require('../../schemas/product')
 const Review = require('../../schemas/review')
 const Post = require('../../schemas/post')
+const Comment = require('../../schemas/comment')
 
 const productId = new mongoose.Types.ObjectId()
 const productOne = {
@@ -82,13 +83,28 @@ const postTwo = {
   title: "Don't listen to us, we don't know what we're doing",
 }
 
+const commentId = new mongoose.Types.ObjectId()
+const commentOne = {
+  _id: commentId,
+  title: 'This post sucks',
+  body: 'Instructions not clear, got dick stuck in toaster.',
+}
+
+const commentTwo = {
+  ...commentOne,
+  _id: new mongoose.Types.ObjectId(),
+  title: 'Nevermind, I got it out...',
+}
+
 const setupDatabase = async () => {
   await Product.deleteMany({})
   await Review.deleteMany({})
   await Post.deleteMany({})
+  await Comment.deleteMany({})
   await new Product(productOne).save()
   await request(app).post(`/product/${productId}/review`).send(reviewOne)
   await new Post(postOne).save()
+  await request(app).post(`/post/${postId}/comment`).send(commentOne)
 }
 
 module.exports = {
@@ -100,5 +116,7 @@ module.exports = {
   reviewTwo,
   postId,
   postTwo,
+  commentId,
+  commentTwo,
   setupDatabase,
 }
