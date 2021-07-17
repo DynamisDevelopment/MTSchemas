@@ -4,16 +4,6 @@ const { complete, forbiddenUpdates } = require('../utils')
 
 const router = new express.Router()
 
-const postOne = {
-  title: 'How we do this thing',
-  caption: 'Maybe you can learn to do this thing too?',
-  categories: 'travel',
-  body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At repellat, soluta ullam, adipisci possimus alias numquam, veniam nisi facere quas unde ratione? Vel minus maiores atque vitae molestiae, perspiciatis sequi?',
-  afterthought: 'Some other things',
-  meta: {
-    keywords: ['travel', 'diy'],
-  },
-}
 router.get('/post', async (req, res) => {
   const posts = await Post.find()
 
@@ -58,6 +48,12 @@ router.patch('/post/:id', async (req, res) => {
     await post.save()
     res.send(post)
   }, res)
+})
+
+router.get('/posts/categories', async (req, res) => {
+  const posts = await Post.distinct('categories')
+
+  complete(() => res.send(posts), res, true)
 })
 
 module.exports = router

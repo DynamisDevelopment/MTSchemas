@@ -16,9 +16,9 @@ describe('posts', () => {
   })
 
   test('Gets all posts', async () => {
-    const res = await Post.find()
+    const res = await request(app).get(`/post`).expect(200)
 
-    expect(res.length).toEqual(1)
+    expect(res.body.length).toEqual(1)
   })
 
   test('Gets specific post and populates comments', async () => {
@@ -52,5 +52,11 @@ describe('posts', () => {
       .expect(200)
 
     expect(res.body.title).toEqual(title)
+  })
+
+  test('Gets all categories', async () => {
+    const res = await request(app).get(`/posts/categories`).expect(200)
+
+    expect(res.body.length).toEqual(1)
   })
 })
