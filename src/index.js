@@ -6,7 +6,7 @@ const utils = require('./utils')
 const Product = require('./schemas/product')
 const Post = require('./schemas/post')
 const Review = require('./schemas/review')
-const Comment = require('./schemas/post')
+const Comment = require('./schemas/comment')
 
 // * Routes
 const productRouter = require('./routes/products')
@@ -18,11 +18,11 @@ const commentRouter = require('./routes/comments')
 const mocks = require('./tests/utils/db')
 
 // * Connect to DB
-// if (process.env.STAGE === 'test') {
-const port = process.env.PORT || 4001
+if (process.env.STAGE === 'test') {
+  const port = process.env.PORT || 4001
 
-app.listen(port, () => console.log(`running on port: ${port}`))
-// }
+  app.listen(port, () => console.log(`running on port: ${port}`))
+}
 
 module.exports = {
   Product,

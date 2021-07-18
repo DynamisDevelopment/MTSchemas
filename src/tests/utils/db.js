@@ -86,7 +86,7 @@ const postTwo = {
 const commentId = new mongoose.Types.ObjectId()
 const commentOne = {
   _id: commentId,
-  title: 'This post sucks',
+  name: 'John Johnson',
   body: 'Instructions not clear, got dick stuck in toaster.',
 }
 

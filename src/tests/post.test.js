@@ -2,7 +2,7 @@ const request = require('supertest')
 const app = require('../app')
 const Post = require('../schemas/post')
 const Comment = require('../schemas/comment')
-const { postId, postTwo, setupDatabase } = require('./utils/db')
+const { postId, postTwo, commentTwo, setupDatabase } = require('./utils/db')
 
 beforeEach(setupDatabase)
 
@@ -24,8 +24,8 @@ describe('posts', () => {
   test('Gets specific post and populates comments', async () => {
     const res = await request(app).get(`/post/${postId}`).expect(200)
 
-    const title = res.body.comments[0].title
-    expect(title).toEqual('This post sucks')
+    const name = res.body.comments[0].name
+    expect(name).toEqual(commentTwo.name)
   })
 
   test('Deletes post', async () => {

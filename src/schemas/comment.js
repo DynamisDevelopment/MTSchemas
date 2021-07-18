@@ -3,7 +3,7 @@ const { wordLength } = require('../utils')
 
 const CommentSchema = new mongoose.Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
       validate: {
@@ -22,6 +22,11 @@ const CommentSchema = new mongoose.Schema(
         },
         message: () => "Give it up bro, she's not gonna send you feet pics.",
       },
+    },
+    image: Buffer,
+    replies: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Comment',
     },
   },
   {

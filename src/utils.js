@@ -1,7 +1,6 @@
 const sendErr = (res, err, shouldLog) => {
   if (shouldLog) console.log(err)
-  res.status(400)
-  res.send(err)
+  res.status(400).send(err)
 }
 
 const complete = (callback, res, shouldLog) => {

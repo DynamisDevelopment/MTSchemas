@@ -31,14 +31,14 @@ describe('comments', () => {
   })
 
   test('Updates comment', async () => {
-    const title = 'I changed my mind'
+    const name = 'Different Name'
     const res = await request(app)
       .patch(`/comment/${commentId}`)
       .send({
-        title,
+        name,
       })
       .expect(200)
 
-    expect(res.body.title).toEqual(title)
+    expect(res.body.name).toEqual(name)
   })
 })
