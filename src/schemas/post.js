@@ -64,10 +64,12 @@ const PostSchema = new mongoose.Schema(
         default: false,
       },
     },
-    comments: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Comment',
-    },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
   },
   {
     timestamps: true,

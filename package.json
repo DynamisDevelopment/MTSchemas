@@ -6,7 +6,7 @@
   "scripts": {
     "test": "env-cmd -e test jest --watch --runInBand",
     "publish": "npm publish",
-    "start": "env-cmd -e dev nodemon ./src/index"
+    "dev": "env-cmd -e dev nodemon ./src/index"
   },
   "jest": {
     "testEnvironment": "node"
@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "3.1.10",
-    "mongoose": "5.3.16",
+    "mongoose": "^5.13.3",
     "validator": "^13.6.0"
   },
   "devDependencies": {

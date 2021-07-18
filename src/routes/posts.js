@@ -14,6 +14,10 @@ router.get('/post/:id', async (req, res) => {
   let post = await Post.findById(req.params.id).populate({
     path: 'comments',
     model: 'Comment',
+    populate: {
+      path: 'replies',
+      model: 'Comment',
+    },
   })
 
   complete(() => res.send(post), res)

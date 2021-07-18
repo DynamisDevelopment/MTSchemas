@@ -6,12 +6,17 @@ try {
     mongoose = prequire('mongoose')
 }
 
-mongoose.connect(`mongodb://127.0.0.1:27017/${process.env.MONGODB_URL}`, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-})
+const mongooseConnect = url =>
+  mongoose.connect(
+    `mongodb://127.0.0.1:27017/${url ? url : process.env.MONGODB_URL}`,
+    {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+    }
+  )
 
 module.exports = {
-  mongoose,
+  mongooseConnect,
 }

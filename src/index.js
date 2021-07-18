@@ -1,5 +1,5 @@
 const app = require('./app')
-const { mongoose } = require('./db')
+const { mongooseConnect } = require('./db')
 const utils = require('./utils')
 
 // * Schemas
@@ -18,11 +18,12 @@ const commentRouter = require('./routes/comments')
 const mocks = require('./tests/utils/db')
 
 // * Connect to DB
-if (process.env.STAGE === 'test') {
-  const port = process.env.PORT || 4001
+// if (process.env.STAGE === 'test') {
+// mongooseConnect(process.env.MONGODB_URL)
+// const port = process.env.PORT || 4001
 
-  app.listen(port, () => console.log(`running on port: ${port}`))
-}
+// app.listen(port, () => console.log(`running on port: ${port}`))
+// }
 
 module.exports = {
   Product,
@@ -33,7 +34,7 @@ module.exports = {
   reviewRouter,
   postRouter,
   commentRouter,
-  mongoose,
+  mongooseConnect,
   ...utils,
   ...mocks,
 }
