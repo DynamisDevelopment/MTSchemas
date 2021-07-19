@@ -1,4 +1,5 @@
 const express = require('express')
+const { mongooseConnect } = require('./db')
 require('./db')
 
 // * Routes
@@ -15,5 +16,9 @@ app.use(productRouter)
 app.use(reviewRouter)
 app.use(postRouter)
 app.use(commentRouter)
+
+// * Connect to DB
+if (process.env.STAGE === 'test' || 'dev')
+  mongooseConnect(process.env.MONGODB_URL)
 
 module.exports = app

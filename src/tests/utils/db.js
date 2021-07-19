@@ -101,6 +101,7 @@ const setupDatabase = async () => {
   await Review.deleteMany({})
   await Post.deleteMany({})
   await Comment.deleteMany({})
+
   await new Product(productOne).save()
   await request(app).post(`/product/${productId}/review`).send(reviewOne)
   await new Post(postOne).save()
