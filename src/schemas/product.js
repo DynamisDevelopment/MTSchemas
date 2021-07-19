@@ -73,10 +73,7 @@ const ProductSchema = new mongoose.Schema(
       },
     ],
     categories: [String],
-    pictures: {
-      type: [Buffer],
-      // required: true,
-    },
+    pictures: [String], //* Urls
     social: {
       facebook: String,
       twitter: String,

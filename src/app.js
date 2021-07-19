@@ -18,7 +18,6 @@ app.use(postRouter)
 app.use(commentRouter)
 
 // * Connect to DB
-if (process.env.STAGE === 'test' || 'dev')
-  mongooseConnect(process.env.MONGODB_URL)
+mongooseConnect(process.env.MONGODB_URL)
 
 module.exports = app
