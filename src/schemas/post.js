@@ -20,10 +20,13 @@ const PostSchema = new mongoose.Schema(
         message: () => 'Keep it brief!',
       },
     },
-    // thumbnails: {
-    //   type: [Buffer],
-    //   required: true,
-    // },
+    thumbnail: {
+      type: String,
+    },
+    assets: {
+      //* Banner Content
+      type: [String],
+    },
     categories: {
       type: [String],
     },

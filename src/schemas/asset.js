@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const ImageSchema = new mongoose.Schema(
+const AssetSchema = new mongoose.Schema(
   {
-    image: {
+    asset: {
       type: Buffer,
       required: true,
     },
@@ -17,6 +17,6 @@ const ImageSchema = new mongoose.Schema(
   }
 )
 
-const Image = mongoose.model('Image', ImageSchema)
+const Asset = mongoose.model('Asset', AssetSchema)
 
-module.exports = Image
+module.exports = Asset

@@ -1,8 +1,14 @@
 const express = require('express')
 const Post = require('../schemas/post')
-const { complete, forbiddenUpdates } = require('../utils')
+const {
+  complete,
+  forbiddenUpdates,
+  assetInit,
+  saveAssets,
+} = require('../utils')
 
 const router = new express.Router()
+const asset = assetInit()
 
 router.get('/post', async (req, res) => {
   const posts = await Post.find()
@@ -59,5 +65,15 @@ router.get('/posts/categories', async (req, res) => {
 
   complete(() => res.send(posts), res, true)
 })
+
+router.post(
+  '/post/:id/bannerContent',
+  asset.array('picture'),
+  async (req, res) => {
+    const post = await Post.findById(req.params.id)
+
+    complete(() => saveAssets(req, res, post), res, true)
+  }
+)
 
 module.exports = router

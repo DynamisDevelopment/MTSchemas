@@ -29,9 +29,6 @@ const productOne = {
     },
   ],
   colors: ['#ffffff', '#bebebe', '#cccccc'],
-  //   pictures: [
-  //     'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmikeandmikesorganics.com%2Fwp-content%2Fuploads%2F2015%2F09%2FBananass-large.jpg&f=1&nofb=1',
-  //   ],
   social: {
     facebook: 'https:',
     pintrest: 'https:',

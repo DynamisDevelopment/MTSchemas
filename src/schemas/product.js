@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Review = require('./review')
+const Asset = require('./asset')
 const { wordLength } = require('../utils')
 
 const ProductSchema = new mongoose.Schema(
@@ -73,7 +74,7 @@ const ProductSchema = new mongoose.Schema(
       },
     ],
     categories: [String],
-    pictures: [String], //* Urls
+    assets: [String],
     social: {
       facebook: String,
       twitter: String,
@@ -108,6 +109,7 @@ const ProductSchema = new mongoose.Schema(
 ProductSchema.pre('findOneAndDelete', async function (next) {
   const product = this.getQuery()
   await Review.deleteMany({ owner: product._id })
+  await Asset.deleteMany({ owner: product._id })
   next()
 })
 

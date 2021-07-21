@@ -2,6 +2,7 @@ const request = require('supertest')
 const app = require('../app')
 const Product = require('../schemas/product')
 const Review = require('../schemas/review')
+const Image = require('../schemas/asset')
 const { productId, productTwo, setupDatabase } = require('./utils/db')
 
 beforeEach(setupDatabase)
@@ -29,11 +30,13 @@ describe('Products', () => {
     expect(score).toEqual(5)
   })
 
-  test('Delete Product and related Reviews', async () => {
+  test('Delete Product and related Reviews and Images', async () => {
     await request(app).delete(`/product/${productId}`).expect(200)
 
-    const products = await Review.find({ owner: productId })
-    expect(products.length).toEqual(0)
+    const reviews = await Review.find({ owner: productId })
+    const images = await Image.find({ owner: productId })
+    expect(reviews.length).toEqual(0)
+    expect(images.length).toEqual(0)
   })
 
   test('Updates Product', async () => {
