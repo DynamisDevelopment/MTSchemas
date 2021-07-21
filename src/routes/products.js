@@ -1,4 +1,5 @@
 const express = require('express')
+const slugify = require('slugify')
 const Product = require('../schemas/product')
 const {
   complete,
@@ -26,6 +27,9 @@ router.get('/product/:id', async (req, res) => {
 })
 
 router.post('/product', async (req, res) => {
+  let categories = []
+  req.body.categories.forEach(category => categories.push(slugify(category)))
+  req.body.categories = categories
   const product = await Product(req.body)
 
   complete(async () => {
