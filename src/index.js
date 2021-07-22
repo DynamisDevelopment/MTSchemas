@@ -13,6 +13,7 @@ const productRouter = require('./routes/products')
 const reviewRouter = require('./routes/reviews')
 const postRouter = require('./routes/posts')
 const commentRouter = require('./routes/comments')
+const miscRouter = require('./routes/misc')
 
 // * Utils
 const mocks = require('./tests/utils/db')
@@ -33,6 +34,7 @@ module.exports = {
   reviewRouter,
   postRouter,
   commentRouter,
+  miscRouter,
   mongooseConnect,
   ...utils,
   ...mocks,

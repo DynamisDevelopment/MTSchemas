@@ -14,7 +14,8 @@ const asset = assetInit()
 router.get('/product', async (req, res) => {
   const products = await Product.find()
 
-  complete(() => res.send(products), res)
+  const hasImages = products.filter(product => product.assets.length > 0)
+  complete(() => res.send(hasImages), res)
 })
 
 router.get('/product/:id', async (req, res) => {
@@ -23,7 +24,11 @@ router.get('/product/:id', async (req, res) => {
     model: 'Review',
   })
 
-  complete(() => res.send(product), res)
+  complete(() => {
+    if (!product || product.assets.length === 0)
+      throw new Error('No Product Found')
+    res.send(product)
+  }, res)
 })
 
 router.post('/product', async (req, res) => {
