@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const fs = require('fs')
 const request = require('supertest')
 const app = require('../../app')
 const Product = require('../../schemas/product')
@@ -15,7 +16,7 @@ const productOne = {
     price: 15.0,
     endTimestamp: new Date(),
   },
-
+  categories: ['Tech', 'DIY'],
   summary:
     'Lorem ipsum dolor sit Lorem ipsum, dolor sit amet consectetur Lorem ipsum dolor sit Lorem ipsum, dolor sit amet consectetur ipsum dolor sit Lorem ipsum, dolor sit amet consectetur',
   modifier: [
@@ -101,6 +102,9 @@ const setupDatabase = async () => {
 
   await new Product(productOne).save()
   await request(app).post(`/product/${productId}/review`).send(reviewOne)
+  await request(app)
+    .post(`/product/${productId}/images`)
+    .attach('picture', `${__dirname}/assets/waifus.jpg`)
   await new Post(postOne).save()
   await request(app).post(`/post/${postId}/comment`).send(commentOne)
 }

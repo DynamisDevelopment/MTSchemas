@@ -11,7 +11,8 @@ const complete = (callback, res, shouldLog) => {
   try {
     callback()
   } catch (err) {
-    sendErr(res, err, shouldLog)
+    res.status(400)
+    res.send(err)
   }
 }
 
@@ -63,14 +64,14 @@ const saveAssets = (req, res, schema) =>
   req.files.forEach(async (image, i) => {
     const buffer = await sharp(image.buffer)
       .resize({ width: 350, height: 350 })
-      .png()
+      .jpeg({ mozjpeg: true })
       .toBuffer()
 
     const newImage = await Asset({ asset: buffer, owner: req.params.id })
     newImage.save()
     schema.assets.push(`images/${newImage.id}`)
 
-    if (i + 1 === req.files.length) {
+    if (req.files.length > 1 ? i + 1 < req.files.length : true) {
       await schema.save()
       res.send(schema)
     }

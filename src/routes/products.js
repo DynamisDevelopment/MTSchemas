@@ -33,8 +33,10 @@ router.get('/product/:id', async (req, res) => {
 
 router.post('/product', async (req, res) => {
   let categories = []
-  req.body.categories.forEach(category => categories.push(slugify(category)))
-  req.body.categories = categories
+  if (req.body.categories) {
+    req.body.categories.forEach(category => categories.push(slugify(category)))
+    req.body.categories = categories
+  }
   const product = await Product(req.body)
 
   complete(async () => {

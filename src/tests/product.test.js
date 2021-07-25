@@ -17,6 +17,12 @@ describe('Products', () => {
     expect(res.body.name).toEqual('Chair')
   })
 
+  test('Add Image to Product', async () =>
+    await request(app)
+      .post(`/product/${productId}/images`)
+      .attach('picture', `${__dirname}/utils/assets/waifus.jpg`)
+      .expect(200))
+
   test('Gets all products', async () => {
     const res = await Product.find()
 

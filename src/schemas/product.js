@@ -46,7 +46,7 @@ const ProductSchema = new mongoose.Schema(
         },
       ],
     },
-    modifier: [
+    sizes: [
       {
         name: {
           type: String,
@@ -99,6 +99,10 @@ const ProductSchema = new mongoose.Schema(
     reviews: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Review',
+    },
+    stock: {
+      type: Number,
+      default: 0,
     },
   },
   {
