@@ -16,14 +16,14 @@ const commentRouter = require('./routes/comments')
 const miscRouter = require('./routes/misc')
 
 // * Utils
-const mocks = require('./tests/utils/db')
+const mocks = require('./tests/utils/setup')
 
 // * Connect to DB
-if (process.env.STAGE === 'dev') {
-  const port = process.env.PORT || 4001
+// if (process.env.STAGE === 'dev') {
+//   const port = process.env.PORT || 4001
 
-  app.listen(port, () => console.log(`running on port: ${port}`))
-}
+//   app.listen(port, () => console.log(`running on port: ${port}`))
+// }
 
 module.exports = {
   Product,

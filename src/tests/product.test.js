@@ -3,7 +3,7 @@ const app = require('../app')
 const Product = require('../schemas/product')
 const Review = require('../schemas/review')
 const Image = require('../schemas/asset')
-const { productId, productTwo, setupDatabase } = require('./utils/db')
+const { productId, productTwo, setupDatabase } = require('./utils/setup')
 
 beforeEach(setupDatabase)
 

@@ -1,7 +1,12 @@
 const request = require('supertest')
 const app = require('../app')
 const Review = require('../schemas/review')
-const { productId, reviewId, reviewTwo, setupDatabase } = require('./utils/db')
+const {
+  productId,
+  reviewId,
+  reviewTwo,
+  setupDatabase,
+} = require('./utils/setup')
 
 beforeEach(setupDatabase)
 

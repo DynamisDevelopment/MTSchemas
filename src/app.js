@@ -20,6 +20,6 @@ app.use(commentRouter)
 app.use(miscRouter)
 
 // * Connect to DB
-mongooseConnect(process.env.MONGODB_URL)
+// mongooseConnect(process.env.MONGODB_URL)
 
 module.exports = app
